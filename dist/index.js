@@ -128,7 +128,10 @@ var Dropdown = function (_Component) {
         isOpen: false
       };
       this.fireChangeEvent(newState);
-      this.setState(newState);
+      
+      if(this.props.resetForm) {
+        this.setState(newState);
+      }
     }
   }, {
     key: 'fireChangeEvent',
@@ -203,9 +206,16 @@ var Dropdown = function (_Component) {
     key: 'handleDocumentClick',
     value: function handleDocumentClick(event) {
       if (this.mounted) {
+        if(this.props.resetForm) {
+          this.props.isOpen(this.state.isOpen);
+        } 
+
         if (!_reactDom2.default.findDOMNode(this).contains(event.target)) {
           if (this.state.isOpen) {
             this.setState({ isOpen: false });
+            if(this.props.resetForm) {
+              this.props.isOpen(this.state.isOpen);
+            } 
           }
         }
       }
